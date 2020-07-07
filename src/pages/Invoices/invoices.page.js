@@ -2,29 +2,12 @@ import React from "react";
 import "./invoices.styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import Sidebar from '../../components/sidebar/sidebar.js'
 function InvoicesPage() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <nav
-          id="sidebarMenu"
-          class="col-md-2 d-md-block sidebar-bg sidebar collapse ">
-          <div class="sidebar-sticky pt-3 vh-100">
-            <div class="brand brand-text text-center py-3">
-              <span className="font-weight-bold">Invoicing</span>Systems
-            </div>
-
-            <ul class="nav flex-column mb-2 py-3">
-              <li class="nav-item text-white p-2 ">Current Month</li>
-              <li class="nav-item text-white p-2">Current Month</li>
-              <li class="nav-item text-white p-2">Current Month</li>
-              <li class="nav-item text-white p-2">Current Month</li>
-            </ul>
-            <button className="btn btn-outline-light text-center btn-block">
-              Create Invoice
-            </button>
-          </div>
-        </nav>
+       <Sidebar />
         <div className="px-5 border col-md-10 d-md-block ">
           <div className="py-4">
             <FontAwesomeIcon icon={faSearch} style={{ marginRight: 5 }} />
