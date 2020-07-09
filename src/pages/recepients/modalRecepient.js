@@ -13,7 +13,7 @@ const customStyles = {
   },
 };
 
-function NewModal() {
+function NewModal(props) {
   const [state, setState] = useState({
     customerName: "",
     customerBillingAddress: "",
@@ -33,8 +33,18 @@ function NewModal() {
     setIsOpen(false);
   }
 
-  const handleChange = () => {
-    console.log("hello");
+  const handleChange = (evt) => {
+    const value = evt.target.value;
+    setState({
+      ...state,
+      [evt.target.name]: value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(state);
+    props.update();
   };
 
   const {
@@ -57,10 +67,11 @@ function NewModal() {
         contentLabel="Example Modal"
       >
         <div>Add a New Recepient</div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <FormInput
             label="Name"
             type="text"
+            name="customerName"
             value={customerName}
             onChange={handleChange}
             required
@@ -68,6 +79,7 @@ function NewModal() {
           <FormInput
             label="Billing Addres"
             type="text"
+            name="customerBillingAddress"
             value={customerBillingAddress}
             onChange={handleChange}
             required
@@ -75,6 +87,7 @@ function NewModal() {
           <FormInput
             label="GSTIN"
             type="text"
+            name="customerGSTIN"
             value={customerGSTIN}
             onChange={handleChange}
             required
@@ -82,6 +95,7 @@ function NewModal() {
           <FormInput
             label="Place Of Supply"
             type="text"
+            name="placeOfSupply"
             value={placeOfSupply}
             onChange={handleChange}
             required

@@ -42,6 +42,7 @@ function Recepient() {
     placeOfSupply: "",
   });
 
+  //useEffect to fetch recepient data.
   useEffect(() => {
     axios
       .get("http://13.82.137.224/recipients?uid=rohit13")
@@ -49,6 +50,7 @@ function Recepient() {
       .catch((err) => console.log("error"));
   }, [ticker]);
 
+  //function to delete recepient.
   function deleteRecepient(id) {
     axios
       .delete(`http://13.82.137.224/recipients?uid=rohit13&recipientID=${id}`)
@@ -56,12 +58,10 @@ function Recepient() {
       .catch((err) => alert("error in connection , please try again"));
   }
 
-  const {
-    customerName,
-    customerBillingAddress,
-    customerGSTIN,
-    placeOfSupply,
-  } = state;
+  function updateData() {
+    console.log("parent updated");
+    setTicker(!ticker);
+  }
 
   return (
     <div className="container-fluid">
@@ -71,7 +71,7 @@ function Recepient() {
           <div className="py-4">
             <div className="d-flex flex-row justify-content-between">
               <input type="text" placeholder="Search" />
-              <div>
+              {/* <div>
                 <button className="btn btn-outline-dark" onClick={openModal}>
                   Add a New Recepient
                 </button>
@@ -99,8 +99,8 @@ function Recepient() {
                     </button>
                   </form>
                 </Modal>
-              </div>
-              <NewModal />
+              </div> */}
+              <NewModal update={updateData} />
             </div>
           </div>
           <table className="table p-3 block">
