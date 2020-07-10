@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import Modal from "react-modal";
 import FormInput from "../../components/form-input/form-input.component";
+import axios from "axios";
 const customStyles = {
   content: {
     top: "50%",
@@ -13,7 +13,7 @@ const customStyles = {
   },
 };
 
-function NewModal(props) {
+function AddModal(props) {
   const [state, setState] = useState({
     customerName: "",
     customerBillingAddress: "",
@@ -41,10 +41,22 @@ function NewModal(props) {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(state);
+
+    await axios({
+      method: "post",
+      url: `http://13.82.137.224/recipients?uid=rohit13`,
+      headers: {},
+      data: {
+        customerName: `${state.customerName}`,
+        customerBillingAddress: `${state.customerBillingAddress}`,
+        customerGSTIN: `${state.customerGSTIN}`,
+        placeOfSupply: `${state.placeOfSupply}`,
+      },
+    });
     props.update();
+    closeModal();
   };
 
   const {
@@ -109,4 +121,4 @@ function NewModal(props) {
   );
 }
 
-export default NewModal;
+export default AddModal;

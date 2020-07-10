@@ -2,34 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./recepient.styles.scss";
 import Sidebar from "../../components/sidebar/sidebar";
 import axios from "axios";
-import FormInput from "../../components/form-input/form-input.component";
-import Modal from "react-modal";
-import NewModal from "./modalRecepient";
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
+import AddModal from "./AddModal";
+import EditModal from './UpdateModal';
 
 function Recepient() {
-  //functions for modal control
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  //   function afterOpenModal() {
-
-  //   }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
 
   //states definition
   const [data, setData] = useState([]); //state to store data from server
@@ -41,14 +17,14 @@ function Recepient() {
     customerGSTIN: "",
     placeOfSupply: "",
   });
-
+  const [search, setSearch] = useState("")
   //useEffect to fetch recepient data.
   useEffect(() => {
     axios
-      .get("http://13.82.137.224/recipients?uid=rohit13")
+      .get(`http://13.82.137.224/recipients/search?uid=rohit13&q=${search}`)
       .then((res) => setData(res.data.data))
       .catch((err) => console.log("error"));
-  }, [ticker]);
+  }, [ticker, search]);
 
   //function to delete recepient.
   function deleteRecepient(id) {
@@ -59,7 +35,6 @@ function Recepient() {
   }
 
   function updateData() {
-    console.log("parent updated");
     setTicker(!ticker);
   }
 
@@ -70,37 +45,8 @@ function Recepient() {
         <div className="px-5 border col-md-10 d-md-block ">
           <div className="py-4">
             <div className="d-flex flex-row justify-content-between">
-              <input type="text" placeholder="Search" />
-              {/* <div>
-                <button className="btn btn-outline-dark" onClick={openModal}>
-                  Add a New Recepient
-                </button>
-                <Modal
-                  isOpen={modalIsOpen}
-                  //onAfterOpen={afterOpenModal}
-                  onRequestClose={closeModal}
-                  style={customStyles}
-                  contentLabel="Example Modal"
-                >
-                  <div>Add a New Recepient</div>
-                  <form>
-                    <FormInput
-                      label="Name"
-                      type="text"
-                      value={customerName}
-                      //onChange={handleChange}
-                      required
-                    />
-                    <FormInput label="Billing Addres" type="text" required />
-                    <FormInput label="GSTIN" type="text" required />
-                    <FormInput label="Place Of Supply" type="text" required />
-                    <button className="btn btn-dark btn-block" type="submit">
-                      Submit
-                    </button>
-                  </form>
-                </Modal>
-              </div> */}
-              <NewModal update={updateData} />
+              <input type="text" placeholder="Search" onChange={event => setSearch(event.target.value)} />
+              <AddModal update={updateData} />
             </div>
           </div>
           <table className="table p-3 block">
@@ -124,12 +70,7 @@ function Recepient() {
                   <td>{val.customerGSTIN}</td>
                   <td>{val.placeOfSupply}</td>
                   <td>
-                    <button
-                      className="btn btn-dark"
-                      onClick={() => console.log("button pressed")}
-                    >
-                      Edit
-                    </button>
+                    <EditModal data={val} update={updateData} />
                   </td>
                   <td>
                     <button
