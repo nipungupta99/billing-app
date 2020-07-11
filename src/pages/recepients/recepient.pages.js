@@ -10,26 +10,26 @@ function Recepient() {
   //states definition
   const [data, setData] = useState([]); //state to store data from server
   const [ticker, setTicker] = useState(false); //ticker to update the page and api call
-  const [state, setState] = useState({
-    //state for data for adding new recepient
-    customerName: "",
-    customerBillingAddress: "",
-    customerGSTIN: "",
-    placeOfSupply: "",
-  });
   const [search, setSearch] = useState("")
   //useEffect to fetch recepient data.
   useEffect(() => {
     axios
-      .get(`http://13.82.137.224/recipients/search?uid=rohit13&q=${search}`)
-      .then((res) => setData(res.data.data))
-      .catch((err) => console.log("error"));
+      .get(`http://13.82.137.224/recipients/search?uid=root&q=${search}`)
+      .then((res) => updateState(res))
   }, [ticker, search]);
 
+  function updateState(res) {
+    if (res.data.message == "error") {
+      alert('No data Here')
+    }
+    else {
+      setData(res.data.data)
+    }
+  }
   //function to delete recepient.
   function deleteRecepient(id) {
     axios
-      .delete(`http://13.82.137.224/recipients?uid=rohit13&recipientID=${id}`)
+      .delete(`http://13.82.137.224/recipients?uid=root&recipientID=${id}`)
       .then((res) => setTicker(!ticker))
       .catch((err) => alert("error in connection , please try again"));
   }
@@ -42,7 +42,7 @@ function Recepient() {
     <div className="container-fluid">
       <div className="row">
         <Sidebar />
-        <div className="px-5 border col-md-10 d-md-block ">
+        <div className="px-5 border col-md-10 d-md-block">
           <div className="py-4">
             <div className="d-flex flex-row justify-content-between">
               <input type="text" placeholder="Search" onChange={event => setSearch(event.target.value)} />

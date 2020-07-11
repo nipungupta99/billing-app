@@ -19,9 +19,9 @@ const customStyles = {
 function EditModal(props) {
     const [state, setState] = useState({
         customerName: props.data.customerName,
-        customerBillingAddress: "",
-        customerGSTIN: "",
-        placeOfSupply: "",
+        customerBillingAddress: props.data.customerBillingAddress,
+        customerGSTIN: props.data.customerGSTIN,
+        placeOfSupply: props.data.placeOfSupply,
     });
     const [modalIsOpen, setIsOpen] = React.useState(false);
     function openModal() {
@@ -48,28 +48,21 @@ function EditModal(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // await axios({
-        //     method: "post",
-        //     url: `http://13.82.137.224/recipients?uid=rohit13&recipientID=${props.val.id}`,
-        //     headers: {},
-        //     data: {
-        //         customerName: `${state.customerName}`,
-        //         customerBillingAddress: `${state.customerBillingAddress}`,
-        //         customerGSTIN: `${state.customerGSTIN}`,
-        //         placeOfSupply: `${state.placeOfSupply}`,
-        //     },
-        // });
-        // props.update();
-        // closeModal();
+        await axios({
+            method: "put",
+            url: `http://13.82.137.224/recipients?uid=root&recipientID=${props.data._id}`,
+            headers: {},
+            data: {
+                customerName: `${state.customerName}`,
+                customerBillingAddress: `${state.customerBillingAddress}`,
+                customerGSTIN: `${state.customerGSTIN}`,
+                placeOfSupply: `${state.placeOfSupply}`,
+            },
+        });
+        props.update();
+        closeModal();
         console.log(state)
     };
-
-    const {
-        customerName,
-        customerBillingAddress,
-        customerGSTIN,
-        placeOfSupply,
-    } = state;
 
     return (
         <div>
@@ -100,20 +93,22 @@ function EditModal(props) {
                         required
                     />
                     <FormInput
-                        placeholder={props.data.customerBillingAddress}
+
                         label="Billing Addres"
                         type="text"
                         name="customerBillingAddress"
-                        value={customerBillingAddress}
+                        //value={customerBillingAddress}
+                        value={state.customerBillingAddress}
                         onChange={handleChange}
                         required
                     />
                     <FormInput
-                        placeholder={props.data.customerGSTIN}
+
                         label="GSTIN"
                         type="text"
                         name="customerGSTIN"
-                        value={customerGSTIN}
+                        //value={customerGSTIN}
+                        value={state.customerGSTIN}
                         onChange={handleChange}
                         required
                     />
@@ -122,7 +117,8 @@ function EditModal(props) {
                         label="Place Of Supply"
                         type="text"
                         name="placeOfSupply"
-                        value={placeOfSupply}
+                        //value={placeOfSupply}
+                        value={state.placeOfSupply}
                         onChange={handleChange}
                         required
                     />

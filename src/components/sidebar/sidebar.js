@@ -19,11 +19,16 @@ function Sidebar() {
           </li>
           <li class="nav-item text-white p-2">Current Month</li>
           <li class="nav-item text-white p-2">Current Month</li>
-          <li class="nav-item text-white p-2">Current Month</li>
+          <li class="nav-item text-white p-2 ">
+            <Link to="/settings" className="text-white">
+              Settings
+            </Link>
+          </li>
         </ul>
-        <button className="btn btn-outline-light text-center btn-block">
+        <Link to="/create" className="text-white btn btn-block btn-outline-light">
           Create Invoice
-        </button>
+        </Link>
+
       </div>
     </nav>
   );

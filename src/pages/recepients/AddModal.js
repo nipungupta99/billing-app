@@ -46,7 +46,7 @@ function AddModal(props) {
 
     await axios({
       method: "post",
-      url: `http://13.82.137.224/recipients?uid=rohit13`,
+      url: `http://13.82.137.224/recipients?uid=root`,
       headers: {},
       data: {
         customerName: `${state.customerName}`,
