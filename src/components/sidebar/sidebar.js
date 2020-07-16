@@ -25,10 +25,12 @@ function Sidebar() {
             </Link>
           </li>
         </ul>
-        <Link to="/create" className="text-white btn btn-block btn-outline-light">
+        <Link
+          to="/create"
+          className="text-white btn btn-block btn-outline-light"
+        >
           Create Invoice
         </Link>
-
       </div>
     </nav>
   );
