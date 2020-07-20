@@ -1,4 +1,4 @@
-import React, { usePrevious, useState, useEffect } from "react";
+import React, { usePrevious, useState, useEffect, useCallback } from "react";
 import FormInput from "../../components/form-input/form-input.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -37,7 +37,9 @@ function InputField() {
           name="taxableValue"
           value={item.taxableValue || ""}
           //onChange={(e) => handleChange(idx, e)}
-          onChange={(e) => handleChange(idx, e)}
+          onChange={(e) => {
+            handleChange(idx, e);
+          }}
         />
 
         <div>
@@ -74,6 +76,13 @@ function InputField() {
     users[i] = { ...users[i], [name]: value };
     setState({ users });
   }
+  const handleLog = useCallback(
+    (name) => {
+      console.log(state.users);
+      console.log(name);
+    },
+    [state]
+  );
 
   function removeClick(i, e) {
     let users = [...state.users];
@@ -87,16 +96,39 @@ function InputField() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {createUI()}
-      <input
-        className="btn btn-dark m-3"
-        type="button"
-        value="add more"
-        onClick={addClick}
-      />
-      <input type="submit" value="Submit" />
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        {createUI()}
+        <input
+          className="btn btn-dark m-3"
+          type="button"
+          value="add more"
+          onClick={addClick}
+        />
+        <input type="submit" value="Submit" />
+      </form>
+      <div className="container-fluid">
+        <h4 className="bg-dark text-center text-white">PREVIEW</h4>
+        <div className="d-flex flex-column px-5 mx-5 justify-content-center ">
+          <div className="d-flex flex-row justify-content-between">
+            <p>TAXABLE AMOUNT</p>
+            &nbsp; &nbsp;
+            <p>40000 </p>
+          </div>
+          <div className="d-flex flex-row justify-content-between">
+            <p>TAXABLE AMOUNT</p>
+            &nbsp; &nbsp;
+            <p>40000 </p>
+          </div>
+          <div className="d-flex flex-row justify-content-between">
+            <p>TAXABLE AMOUNT</p>
+            &nbsp; &nbsp;
+            <p>40000 </p>
+          </div>
+          <button className="btn btn-dark">Create Invoice</button>
+        </div>
+      </div>
+    </>
   );
 }
 

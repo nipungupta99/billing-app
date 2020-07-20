@@ -13,12 +13,16 @@ function Sidebar() {
 
         <ul class="nav flex-column mb-2 py-3">
           <li class="nav-item text-white p-2 ">
+            <Link to="/" className="text-white">
+              Invoice
+            </Link>
+          </li>
+          <li class="nav-item text-white p-2 ">
             <Link to="/new" className="text-white">
               Recepients
             </Link>
           </li>
-          <li class="nav-item text-white p-2">Current Month</li>
-          <li class="nav-item text-white p-2">Current Month</li>
+
           <li class="nav-item text-white p-2 ">
             <Link to="/settings" className="text-white">
               Settings

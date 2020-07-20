@@ -11,6 +11,7 @@ function CreatePage() {
     customerGSTIN: "",
     placeOfSupply: "",
   });
+  const [taxType, setTaxType] = useState("");
 
   function recieveFromChild(data) {
     const {
@@ -65,7 +66,6 @@ function CreatePage() {
                   }
                 />
                 <FormInput
-                  sm
                   label="PLACE OF SUPPLY"
                   value={details.placeOfSupply}
                   onChange={(event) =>
@@ -74,34 +74,14 @@ function CreatePage() {
                 />
               </div>
             </div>
-            <div className="container-fluid">
-              <div className="d-flex flex-row justify-content-around">
-                <button>CGST+IGST</button>
-                <button>IGST</button>
-              </div>
+            <div className="d-flex flex-row justify-content-around">
+              <button className="btn btn-dark">CGST+IGST</button>
+              <button className="btn btn-dark">IGST</button>
+            </div>
+
+            <div className="container-fluid py-1 ">
               <h4 className="bg-dark text-center text-white">ITEMS</h4>
               <InputField style={{ marginBottom: 10 }} />
-            </div>
-            <div className="container-fluid">
-              <h4 className="bg-dark text-center text-white">PREVIEW</h4>
-              <div className="d-flex flex-column px-5 mx-5 justify-content-center ">
-                <div className="d-flex flex-row justify-content-between">
-                  <p>TAXABLE AMOUNT</p>
-                  &nbsp; &nbsp;
-                  <p>40000 </p>
-                </div>
-                <div className="d-fle   x flex-row justify-content-between">
-                  <p>TAXABLE AMOUNT</p>
-                  &nbsp; &nbsp;
-                  <p>40000 </p>
-                </div>
-                <div className="d-flex flex-row justify-content-between">
-                  <p>TAXABLE AMOUNT</p>
-                  &nbsp; &nbsp;
-                  <p>40000 </p>
-                </div>
-                <button className="btn btn-dark">Create Invoice</button>
-              </div>
             </div>
           </div>
         </div>
