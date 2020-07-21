@@ -6,7 +6,7 @@ import SettingsPage from "./pages/settings/settings.pages";
 import CreatePage from "./pages/create/create.page";
 import InvoiceView from "./pages/View/view.page";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 function App() {
   return (
     <Router>

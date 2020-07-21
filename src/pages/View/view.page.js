@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sidebar from "../../components/sidebar/sidebar";
 import ReactPDF, {
   Page,
@@ -8,15 +8,8 @@ import ReactPDF, {
   StyleSheet,
   PDFViewer,
   PDFDownloadLink,
-  Font,
 } from "@react-pdf/renderer";
-import {
-  Table,
-  TableHeader,
-  TableCell,
-  TableBody,
-  DataTableCell,
-} from "@david.kucsai/react-pdf-table";
+import { DataContext, DataProvider } from "../../context/dataContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -76,79 +69,95 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
   },
+  downloadButton: {
+    borderWidth: 1,
+    padding: 5,
+    color: "black",
+  },
 });
 
-function MyDocument(y) {
-  const info = y.generalInfo.cin;
+function MyDocument(props) {
+  const [data, setData] = useContext(DataContext);
+  const {
+    invoiceInfo,
+    generalInfo,
+    customerInfo,
+    bankInfo,
+    amountInfo,
+    itemInfo,
+  } = data;
   return (
     <Document>
-      {console.log(info)}
       <Page size="A4">
         <View style={styles.container}>
           <Text style={styles.heading}>TAX INVOICE</Text>
           <View style={styles.section}>
             <View style={styles.textWrap}>
               <Text style={styles.label}>CIN</Text>
-              <Text style={styles.value}></Text>
+              <Text style={styles.value}>{generalInfo.cin}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>PAN</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{generalInfo.pan}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>GSTIN</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{generalInfo.gstin}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>State</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{generalInfo.state}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Invoice Date</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{invoiceInfo.invoiceDate}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Invoice Number</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{invoiceInfo.invoiceNumber}</Text>
             </View>
           </View>
           <View style={styles.br}></View>
           <View style={styles.section}>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Cust. Name</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{customerInfo.customerName}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Bank Name</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{bankInfo.bankName}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Cust. GSTIN</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{customerInfo.customerGSTIN}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Bank A/C No.</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{bankInfo.bankAccountNumber}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Customer Billing Address</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>
+                {customerInfo.customerBillingAddress}
+              </Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>IFSC Code</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{bankInfo.ifscCode}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Place of Supply</Text>
-              <Text style={styles.value}>R0239583409UOJBDS2</Text>
+              <Text style={styles.value}>{customerInfo.placeOfSupply}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Branch</Text>
-              <Text style={styles.value}>NIL</Text>
+              <Text style={styles.value}>{bankInfo.branch}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={styles.label}>Reverse Charge Applicable</Text>
-              <Text style={styles.value}>NIL</Text>
+              <Text style={styles.value}>
+                {customerInfo.reverseChargeApplicable}
+              </Text>
             </View>
             <View style={styles.textWrap}></View>
           </View>
@@ -166,30 +175,26 @@ function MyDocument(y) {
               <Text style={[styles.tHead, { width: "10%" }]}>IGST @18%</Text>
               <Text style={[styles.tHead, { width: "15%" }]}>Total</Text>
             </View>
-            <View style={styles.tDataView}>
-              <Text style={[styles.tData, { width: "5%" }]}>1</Text>
-              <Text style={[styles.tData, { width: "45%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "15%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "10%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "10%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "15%" }]}>Hello</Text>
-            </View>
-            <View style={styles.tDataView}>
-              <Text style={[styles.tData, { width: "5%" }]}>2</Text>
-              <Text style={[styles.tData, { width: "45%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "15%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "10%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "10%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "15%" }]}>Hello</Text>
-            </View>
-            <View style={styles.tDataView}>
-              <Text style={[styles.tData, { width: "5%" }]}>3</Text>
-              <Text style={[styles.tData, { width: "45%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "15%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "10%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "10%" }]}>Hello</Text>
-              <Text style={[styles.tData, { width: "15%" }]}>Hello</Text>
-            </View>
+            {itemInfo.map((item, idx) => (
+              <View style={styles.tDataView}>
+                <Text style={[styles.tData, { width: "5%" }]}>{idx + 1}</Text>
+                <Text style={[styles.tData, { width: "45%" }]}>
+                  {item.itemDescription}
+                </Text>
+                <Text style={[styles.tData, { width: "15%" }]}>
+                  {item.sacCode}
+                </Text>
+                <Text style={[styles.tData, { width: "10%" }]}>
+                  {item.taxableValue}
+                </Text>
+                <Text style={[styles.tData, { width: "10%" }]}>
+                  {item.igst}
+                </Text>
+                <Text style={[styles.tData, { width: "15%" }]}>
+                  {item.totalValue}
+                </Text>
+              </View>
+            ))}
           </View>
           <View style={styles.br}></View>
           <View style={styles.finalSection}>
@@ -202,7 +207,9 @@ function MyDocument(y) {
                 <Text style={[styles.label, { width: "50%" }]}>
                   TAXABLE AMOUNT
                 </Text>
-                <Text style={[styles.value, { width: "70%" }]}>500</Text>
+                <Text style={[styles.value, { width: "70%" }]}>
+                  {amountInfo.taxableAmount}
+                </Text>
               </View>
               <View style={styles.textWrap}>
                 <Text style={[styles.label, { width: "50%" }]}>TOTAL TAX</Text>
@@ -212,30 +219,33 @@ function MyDocument(y) {
                 <Text style={[styles.label, { width: "50%" }]}>
                   INVOICE TOTAL
                 </Text>
-                <Text style={[styles.value, { width: "70%" }]}>100000000</Text>
+                <Text style={[styles.value, { width: "70%" }]}>
+                  {amountInfo.invoiceTotal}
+                </Text>
               </View>
             </View>
           </View>
         </View>
-        <Text>hello</Text>
       </Page>
     </Document>
   );
 }
 
 function InvoiceView(props) {
-  const x = props.location.state;
   return (
     <>
-      <PDFViewer width={830} height={1170}>
-        {MyDocument(x)}
+      <PDFViewer width="100%" height={1170}>
+        <DataProvider>{MyDocument()}</DataProvider>
       </PDFViewer>
-      <PDFDownloadLink document={MyDocument()} fileName="somename.pdf">
+      <PDFDownloadLink
+        style={styles.downloadButton}
+        document={MyDocument()}
+        fileName="somename.pdf"
+      >
         {({ blob, url, loading, error }) =>
           loading ? "Loading document..." : "Download now!"
         }
       </PDFDownloadLink>
-      {console.log(props.location.state.amountInfo.invoiceTotal)}
     </>
   );
 }

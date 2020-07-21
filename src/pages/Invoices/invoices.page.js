@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./invoices.styles.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../../components/sidebar/sidebar.js";
 import axios from "axios";
+import { DataContext } from "../../context/dataContext.js";
 function InvoicesPage() {
-  const [data, setData] = useState([]);
+  const [invoices, setInvoices] = useState([]);
   const [search, setSearch] = useState("");
+  const [data, setData] = useContext(DataContext);
 
   useEffect(() => {
     axios
       .get(`http://13.82.137.224/invoices/search?uid=root&q=${search}`)
-      .then((res) => setData(res.data.data));
+      .then((res) => setInvoices(res.data.data));
   }, [search]);
   return (
     <div className="container-fluid">
@@ -38,7 +40,7 @@ function InvoicesPage() {
               </tr>
             </thead>
             <tbody>
-              {data.map((row, idx) => (
+              {invoices.map((row, idx) => (
                 <tr key={idx + 1}>
                   <td>{row.invoiceInfo.invoiceDate}</td>
                   <td>{row.invoiceInfo.invoiceNumber}</td>
@@ -51,8 +53,9 @@ function InvoicesPage() {
                         pathname: "/view",
                         state: row,
                       }}
+                      onClick={() => setData(row)}
                     >
-                      View{" "}
+                      View
                     </Link>
                   </td>
                 </tr>

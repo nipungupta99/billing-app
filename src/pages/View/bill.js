@@ -1,22 +1,12 @@
-import React from "react";
-import Sidebar from "../../components/sidebar/sidebar";
+import React, { useContext } from "react";
 import ReactPDF, {
   Page,
   Text,
   View,
   Document,
   StyleSheet,
-  PDFViewer,
-  PDFDownloadLink,
-  Font,
 } from "@react-pdf/renderer";
-import {
-  Table,
-  TableHeader,
-  TableCell,
-  TableBody,
-  DataTableCell,
-} from "@david.kucsai/react-pdf-table";
+import { DataContext } from "../../context/dataContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -79,9 +69,9 @@ const styles = StyleSheet.create({
 });
 
 function MyDocument() {
+  const [data, setData] = useContext(DataContext);
   return (
     <Document>
-      {console.log(info)}
       <Page size="A4">
         <View style={styles.container}>
           <Text style={styles.heading}>TAX INVOICE</Text>

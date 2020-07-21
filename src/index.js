@@ -3,9 +3,12 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
+import { DataProvider } from "./context/dataContext";
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <DataProvider>
+      <App />
+    </DataProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
