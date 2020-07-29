@@ -105,7 +105,6 @@ function InputField() {
           value="add more"
           onClick={addClick}
         />
-        <input type="submit" value="Submit" />
       </form>
       <div className="container-fluid">
         <h4 className="bg-dark text-center text-white">PREVIEW</h4>
