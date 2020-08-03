@@ -4,10 +4,13 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
 import { DataProvider } from "./context/dataContext";
+import { DetailsProvider } from "./context/detailsContext.js";
 ReactDOM.render(
   <React.StrictMode>
     <DataProvider>
-      <App />
+      <DetailsProvider>
+        <App />
+      </DetailsProvider>
     </DataProvider>
   </React.StrictMode>,
   document.getElementById("root")

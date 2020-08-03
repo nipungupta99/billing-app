@@ -115,7 +115,7 @@ function CreatePage() {
 
             <div className="container-fluid py-1 ">
               <h4 className="bg-dark text-center text-white">ITEMS</h4>
-              <InputField style={{ marginBottom: 10 }} />
+              <InputField style={{ marginBottom: 10 }} taxType={taxType} />
               <div>
                 <button
                   className="btn btn-dark"

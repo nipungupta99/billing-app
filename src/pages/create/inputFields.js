@@ -2,10 +2,14 @@ import React, { usePrevious, useState, useEffect, useCallback } from "react";
 import FormInput from "../../components/form-input/form-input.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-function InputField() {
+function InputField(props) {
   const [state, setState] = useState({
     users: [{ itemDesc: "", sacCode: "", taxableValue: "", igst: 0 }],
   });
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
+    kalkulate();
+  }, [state]);
 
   // const prevState = usePrevious(state);
 
@@ -13,6 +17,37 @@ function InputField() {
     setState({
       users: [...state.users, { itemDesc: "", sacCode: "", taxableValue: "" }],
     });
+  }
+
+  function taxFields(item) {
+    if (props.taxType === "IGST") {
+      return (
+        <div>
+          <h4 style={{ fontSize: 20 }}>
+            ₹{(item.taxableValue * 0.18).toFixed(2)}
+          </h4>
+          <p className="label"> IGST</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="d-flex flex-row">
+          <div>
+            <h4 style={{ fontSize: 20 }}>
+              ₹{(item.taxableValue * 0.09).toFixed(2)}
+            </h4>
+            <p className="label"> CGST</p>
+          </div>
+          &nbsp; &nbsp;
+          <div>
+            <h4 style={{ fontSize: 20 }}>
+              ₹{(item.taxableValue * 0.09).toFixed(2)}
+            </h4>
+            <p className="label"> SGST</p>
+          </div>
+        </div>
+      );
+    }
   }
 
   function createUI() {
@@ -42,12 +77,7 @@ function InputField() {
           }}
         />
 
-        <div>
-          <h4 style={{ fontSize: 20 }}>
-            ₹{(item.taxableValue * 0.18).toFixed(2)}
-          </h4>
-          <p className="label"> IGST</p>
-        </div>
+        {taxFields(item)}
         <div>
           <h4 style={{ fontSize: 20 }}>
             ₹
@@ -95,6 +125,12 @@ function InputField() {
     event.preventDefault();
   }
 
+  // let number = 0;
+  function kalkulate() {
+    setTotal(
+      state.users.reduce((acc, curr) => acc + parseInt(curr.taxableValue), 0)
+    );
+  }
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -112,17 +148,17 @@ function InputField() {
           <div className="d-flex flex-row justify-content-between">
             <p>TAXABLE AMOUNT</p>
             &nbsp; &nbsp;
-            <p>40000 </p>
+            <p>{total.toFixed(2)}</p>
           </div>
           <div className="d-flex flex-row justify-content-between">
             <p>TAXABLE AMOUNT</p>
             &nbsp; &nbsp;
-            <p>40000 </p>
+            <p>{(total * 0.18).toFixed(2)}</p>
           </div>
           <div className="d-flex flex-row justify-content-between">
             <p>TAXABLE AMOUNT</p>
             &nbsp; &nbsp;
-            <p>40000 </p>
+            <p>{(parseFloat(total) + parseFloat(total * 0.18)).toFixed(2)}</p>
           </div>
           <button className="btn btn-dark">Create Invoice</button>
         </div>
