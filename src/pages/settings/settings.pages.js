@@ -10,7 +10,7 @@ function SettingsPage() {
       <div className="row">
         <Sidebar />
         <div className="px-5 border col-md-10 d-md-block ">
-          <div className="container border">
+          {/* <div className="container border">
             <HeadingPair
               heading="Color Theming"
               subheading="Select your preferred color theming for invoices"
@@ -27,7 +27,7 @@ function SettingsPage() {
               <button className="color bg-info "></button>
               <button className="color bg-dark "></button>
             </div>
-          </div>
+          </div> */}
           <AccountDetails />
           <CompanyDetails />
         </div>

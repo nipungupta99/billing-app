@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeadingPair from "../../components/heading-pair/heading-pair.component";
 import FormInput from "../../components/form-input/form-input.component";
+import axios from "axios";
 function CompanyDetails() {
   const [data, setData] = React.useState({
     companyName: "",
@@ -17,6 +18,11 @@ function CompanyDetails() {
     bankAccountNumber: "",
     ifscCode: "",
   });
+  useEffect(() => {
+    axios
+      .get(`http://13.82.137.224/users/root?name=rohitchu&password=password`)
+      .then((res) => setData(res.data.data.details));
+  }, []);
   function handleChange(evt) {
     const value = evt.target.value;
     setData({
@@ -26,7 +32,23 @@ function CompanyDetails() {
   }
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(data);
+    axios
+      .put(`http://13.82.137.224/users/root`, {
+        companyName: data.companyName,
+        companyAddress: data.companyAddress,
+        companyEmail: data.companyEmail,
+        companyPhone: data.companyPhone,
+        industry: data.industry,
+        state: data.state,
+        branch: data.branch,
+        cin: data.cin,
+        pan: data.pan,
+        gstin: data.gstin,
+        bankName: data.bankName,
+        bankAccountNumber: data.bankAccountNumber,
+        ifscCode: data.ifscCode,
+      })
+      .then((res) => console.log(res));
   }
   return (
     <div className=" px-5 container border my-4">
