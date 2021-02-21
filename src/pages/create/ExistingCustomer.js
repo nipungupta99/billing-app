@@ -18,8 +18,8 @@ function ExistingCustomer(props) {
   const [search, setSearch] = useState("");
   useEffect(() => {
     axios
-      .get(`http://13.82.137.224/recipients/search?uid=root&q=${search}`)
-      .then((res) => setData(res.data.data));
+      .get(`http://localhost:3000/recipients/search?uid=root&q=${search}`)
+      .then(res => setData(res.data.data));
   }, [search]);
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -51,7 +51,7 @@ function ExistingCustomer(props) {
         <input
           type="text"
           placeholder="Search"
-          onChange={(event) => setSearch(event.target.value)}
+          onChange={event => setSearch(event.target.value)}
         />
         <table className="table p-3 block">
           <thead className="thead-dark">

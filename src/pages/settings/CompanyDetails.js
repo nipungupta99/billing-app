@@ -20,8 +20,8 @@ function CompanyDetails() {
   });
   useEffect(() => {
     axios
-      .get(`http://13.82.137.224/users/root?name=rohitchu&password=password`)
-      .then((res) => setData(res.data.data.details));
+      .get(`http://localhost:3000/users/root?name=admin&password=password`)
+      .then(res => setData(res.data.data.details));
   }, []);
   function handleChange(evt) {
     const value = evt.target.value;
@@ -33,7 +33,7 @@ function CompanyDetails() {
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .put(`http://13.82.137.224/users/root`, {
+      .put(`http://localhost:3000/users/root`, {
         companyName: data.companyName,
         companyAddress: data.companyAddress,
         companyEmail: data.companyEmail,
@@ -48,7 +48,8 @@ function CompanyDetails() {
         bankAccountNumber: data.bankAccountNumber,
         ifscCode: data.ifscCode,
       })
-      .then((res) => console.log(res));
+      .then(res => console.log(res))
+      .then(alert("Company Details Saved Successfully."));
   }
   return (
     <div className=" px-5 container border my-4">

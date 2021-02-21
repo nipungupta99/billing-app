@@ -28,7 +28,7 @@ function SettingsPage() {
               <button className="color bg-dark "></button>
             </div>
           </div> */}
-          <AccountDetails />
+          {/* <AccountDetails /> */}
           <CompanyDetails />
         </div>
       </div>

@@ -3,35 +3,33 @@ import "./recepient.styles.scss";
 import Sidebar from "../../components/sidebar/sidebar";
 import axios from "axios";
 import AddModal from "./AddModal";
-import EditModal from './UpdateModal';
+import EditModal from "./UpdateModal";
 
 function Recepient() {
-
   //states definition
   const [data, setData] = useState([]); //state to store data from server
   const [ticker, setTicker] = useState(false); //ticker to update the page and api call
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
   //useEffect to fetch recepient data.
   useEffect(() => {
     axios
-      .get(`http://13.82.137.224/recipients/search?uid=root&q=${search}`)
-      .then((res) => updateState(res))
+      .get(`http://localhost:3000/recipients/search?uid=root&q=${search}`)
+      .then(res => updateState(res));
   }, [ticker, search]);
 
   function updateState(res) {
     if (res.data.message == "error") {
-      alert('No data Here')
-    }
-    else {
-      setData(res.data.data)
+      alert("No data Here");
+    } else {
+      setData(res.data.data);
     }
   }
   //function to delete recepient.
   function deleteRecepient(id) {
     axios
-      .delete(`http://13.82.137.224/recipients?uid=root&recipientID=${id}`)
-      .then((res) => setTicker(!ticker))
-      .catch((err) => alert("error in connection , please try again"));
+      .delete(`http://localhost:3000/recipients?uid=root&recipientID=${id}`)
+      .then(res => setTicker(!ticker))
+      .catch(err => alert("error in connection , please try again"));
   }
 
   function updateData() {
@@ -45,7 +43,11 @@ function Recepient() {
         <div className="px-5 border col-md-10 d-md-block">
           <div className="py-4">
             <div className="d-flex flex-row justify-content-between">
-              <input type="text" placeholder="Search" onChange={event => setSearch(event.target.value)} />
+              <input
+                type="text"
+                placeholder="Search"
+                onChange={event => setSearch(event.target.value)}
+              />
               <AddModal update={updateData} />
             </div>
           </div>

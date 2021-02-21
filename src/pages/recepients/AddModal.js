@@ -33,7 +33,7 @@ function AddModal(props) {
     setIsOpen(false);
   }
 
-  const handleChange = (evt) => {
+  const handleChange = evt => {
     const value = evt.target.value;
     setState({
       ...state,
@@ -41,12 +41,12 @@ function AddModal(props) {
     });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
     await axios({
       method: "post",
-      url: `http://13.82.137.224/recipients?uid=root`,
+      url: `http://localhost:3000/recipients?uid=root`,
       headers: {},
       data: {
         customerName: `${state.customerName}`,

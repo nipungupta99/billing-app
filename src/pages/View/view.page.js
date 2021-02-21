@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../components/sidebar/sidebar";
 import ReactPDF, {
   Page,
@@ -11,12 +11,13 @@ import ReactPDF, {
   Image,
 } from "@react-pdf/renderer";
 import { DataContext, DataProvider } from "../../context/dataContext";
+import axios from "axios";
 import logo from "../../logo-social.png";
 const styles = StyleSheet.create({
   companySection: {
     marginBottom: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
   companyName: {
     fontSize: 25,
@@ -76,6 +77,23 @@ const styles = StyleSheet.create({
 });
 
 function MyDocument(props) {
+  const [latestInfo, setLatestInfo] = useState("");
+
+  // Getting company and general info data
+  const fetchData = async () => {
+    const { data } = await axios.get(
+      `http://localhost:3000/users/root?name=admin&password=password`
+    );
+
+    console.log("latest info", data.data.details);
+    setLatestInfo(data.data.details);
+  };
+
+  // Fetching it initially only
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const [data, setData] = useContext(DataContext);
   const {
     invoiceInfo,
@@ -85,6 +103,9 @@ function MyDocument(props) {
     amountInfo,
     itemInfo,
   } = data;
+
+  console.log("data doc", data);
+
   let integrated = true;
   if (invoiceInfo.invoiceType === "IGST") {
     integrated = true;
@@ -97,16 +118,16 @@ function MyDocument(props) {
       <Page size="A4">
         <View style={{ flex: 1, borderWidth: 5 }}>
           <View style={styles.companySection}>
-            <Image src={logo} style={{ width: 95, height: 70 }} />
+            {/* <Image src={logo} style={{ width: 95, height: 70 }} /> */}
             <View>
               <Text style={styles.companyName}>
-                ASPEK India Private Limited&nbsp;
+                {latestInfo && latestInfo.companyName}&nbsp;
               </Text>
               <Text style={{ textAlign: "left", fontSize: 11, padding: 1 }}>
-                Email: ABC@xyz.com
+                Email: {latestInfo && latestInfo.companyEmail}
               </Text>
               <Text style={{ textAlign: "left", fontSize: 11, padding: 1 }}>
-                Tel: 9315696194
+                Tel: {latestInfo && latestInfo.companyPhone}
               </Text>
             </View>
           </View>
@@ -181,16 +202,26 @@ function MyDocument(props) {
               <Text style={[styles.tHead, { width: "15%" }]}>Total</Text>
             </View>
 
-            <View style={styles.tDataView}>
-              <Text style={[styles.tData, { width: "5%" }]}> 1</Text>
-              <Text style={[styles.tData, { width: "45%" }]}>
-                itemDescription
-              </Text>
-              <Text style={[styles.tData, { width: "15%" }]}>sacCode</Text>
-              <Text style={[styles.tData, { width: "10%" }]}>taxableValue</Text>
-              <Text style={[styles.tData, { width: "10%" }]}>igst</Text>
-              <Text style={[styles.tData, { width: "15%" }]}>totalValue</Text>
-            </View>
+            {itemInfo.map((item, idx) => (
+              <View style={styles.tDataView}>
+                <Text style={[styles.tData, { width: "5%" }]}>{idx + 1}</Text>
+                <Text style={[styles.tData, { width: "45%" }]}>
+                  {item.itemDescription}
+                </Text>
+                <Text style={[styles.tData, { width: "15%" }]}>
+                  {item.sacCode}
+                </Text>
+                <Text style={[styles.tData, { width: "10%" }]}>
+                  {parseFloat(item.taxableValue).toFixed(2)}
+                </Text>
+                <Text style={[styles.tData, { width: "10%" }]}>
+                  {parseFloat(item.igst).toFixed(2)}
+                </Text>
+                <Text style={[styles.tData, { width: "15%" }]}>
+                  {parseFloat(item.totalValue).toFixed(2)}
+                </Text>
+              </View>
+            ))}
           </View>
           <View style={[styles.wrapper, { marginVertical: 15 }]}>
             <View>
@@ -256,7 +287,7 @@ function MyDocument(props) {
                 color: "darkgray",
               }}
             >
-              Regd Office: C-1/46, Krishan Vihar, New Delhi-110086
+              {/* Regd Office: C-1/46, Krishan Vihar, New Delhi-110086 */}
             </Text>
           </View>
         </View>
