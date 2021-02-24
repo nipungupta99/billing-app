@@ -73,6 +73,7 @@ function ExistingCustomer(props) {
                 }}
               >
                 {/* <th scope="row">{idx+1}</th> */}
+
                 <td>{val.customerName}</td>
                 <td>{val.customerBillingAddress} </td>
                 <td>{val.customerGSTIN}</td>

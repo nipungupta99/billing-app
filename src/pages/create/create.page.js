@@ -56,12 +56,11 @@ function CreatePage() {
       customerGSTIN,
       placeOfSupply,
     } = data;
-    // setDetails({
-    //   customerName,
-    //   customerBillingAddress,
-    //   customerGSTIN,
-    //   placeOfSupply,
-    // });
+
+    setCustomerName(customerName);
+    setCustomerBillingAddress(customerBillingAddress);
+    setCustomerGSTIN(customerGSTIN);
+    setPlaceOfSupply(placeOfSupply);
   }
 
   function randomString(len, an) {
