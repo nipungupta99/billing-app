@@ -7,11 +7,18 @@ import Sidebar from "../../components/sidebar/sidebar.js";
 import axios from "axios";
 import moment from "moment";
 import { DataContext } from "../../context/dataContext.js";
+import Pagination from "react-js-pagination";
+
 function InvoicesPage() {
   const [invoices, setInvoices] = useState([]);
   const [search, setSearch] = useState("");
   const [data, setData] = useContext(DataContext);
   const [exists, setExists] = useState(false);
+
+  const [invoicesCount, setInvoicesCount] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
+  const [activePage, setActivePage] = useState(1);
+  const itemsPerPage = 1;
 
   useEffect(() => {
     console.log("invoices =>", invoices);
@@ -19,16 +26,20 @@ function InvoicesPage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/invoices/search?uid=root&q=${search}`)
+      .get(
+        `http://localhost:3000/invoices/search?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
+      )
       .then(res => {
         if (res.data.data === "No invoices.") {
           setExists(false);
         } else {
           setExists(true);
           setInvoices(res.data.data);
+          setInvoicesCount(res.data.count);
+          setPageCount(res.data.pages);
         }
       });
-  }, [search]);
+  }, [search, activePage]);
 
   return (
     <div className="container-fluid">
@@ -85,6 +96,18 @@ function InvoicesPage() {
               </tbody>
             </table>
           )}
+
+          <div className="d-flex justify-content-center">
+            <Pagination
+              activePage={activePage}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={invoicesCount}
+              pageRangeDisplayed={pageCount}
+              onChange={changedPageNumber => setActivePage(changedPageNumber)}
+              linkClass="pag-item"
+              activeLinkClass="pag-item-active"
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ function Recepient() {
   const [recipientsCount, setRecipientsCount] = useState(0);
   const [pageCount, setPageCount] = useState(1);
   const [activePage, setActivePage] = useState(1);
-  const itemsPerPage = 3;
+  const itemsPerPage = 10;
 
   //useEffect to fetch recepient data.
   useEffect(() => {
