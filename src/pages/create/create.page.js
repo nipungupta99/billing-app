@@ -5,7 +5,6 @@ import FormInput from "../../components/form-input/form-input.component";
 import ExistingCustomer from "./ExistingCustomer";
 import InputField from "./inputFields.js";
 import axios from "axios";
-import moment from "moment";
 
 function CreatePage() {
   const [normalInfo, setNormalInfo] = useState("");
@@ -91,7 +90,7 @@ function CreatePage() {
     axios
       .post("http://localhost:3000/invoices?uid=root", {
         invoiceInfo: {
-          invoiceDate: moment().format("D MMM YYYY"),
+          invoiceDate: new Date(),
           invoiceNumber: generateInvNum(),
           invoiceType: "IGST",
         },

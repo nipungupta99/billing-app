@@ -12,6 +12,7 @@ import ReactPDF, {
 } from "@react-pdf/renderer";
 import { DataContext, DataProvider } from "../../context/dataContext";
 import axios from "axios";
+import moment from "moment";
 import logo from "../../logo-social.png";
 const styles = StyleSheet.create({
   companySection: {

@@ -17,3 +17,33 @@ $labelBtn: #9ba3ae;
   font-size: 0.9em;
   color: #9ba3ae;
 }
+
+// Pagination Styling
+$text-color: white;
+$bg-color: #262626;
+$text-color-active: lightcoral;
+$bg-color-active: #000000;
+
+.pag-item {
+  background: $bg-color;
+  padding: 4px 12px;
+  color: $text-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $text-color;
+    text-decoration: none;
+  }
+}
+
+.pag-item-active {
+  background: $bg-color-active;
+  padding: 4px 12px;
+  color: $text-color-active;
+  text-decoration: none;
+
+  &:hover {
+    color: $text-color-active;
+    text-decoration: none;
+  }
+}

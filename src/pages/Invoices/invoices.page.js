@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../../components/sidebar/sidebar.js";
 import axios from "axios";
+import moment from "moment";
 import { DataContext } from "../../context/dataContext.js";
 function InvoicesPage() {
   const [invoices, setInvoices] = useState([]);
@@ -59,7 +60,11 @@ function InvoicesPage() {
                 {exists &&
                   invoices.map((row, idx) => (
                     <tr key={idx + 1}>
-                      <td>{row.invoiceInfo.invoiceDate}</td>
+                      <td>
+                        {moment(row.invoiceInfo.invoiceDate).format(
+                          "YYYY-MM-DD HH:mm:ss"
+                        )}
+                      </td>
                       <td>{row.invoiceInfo.invoiceNumber}</td>
                       <td>{row.amountInfo.invoiceTotal}</td>
                       <td>{row.customerInfo.customerName}</td>

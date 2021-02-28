@@ -4,26 +4,39 @@ import Sidebar from "../../components/sidebar/sidebar";
 import axios from "axios";
 import AddModal from "./AddModal";
 import EditModal from "./UpdateModal";
+import Pagination from "react-js-pagination";
 
 function Recepient() {
   //states definition
   const [data, setData] = useState([]); //state to store data from server
+
   const [ticker, setTicker] = useState(false); //ticker to update the page and api call
   const [search, setSearch] = useState("");
+
+  const [recipientsCount, setRecipientsCount] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
+  const [activePage, setActivePage] = useState(1);
+  const itemsPerPage = 3;
+
   //useEffect to fetch recepient data.
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/recipients/search?uid=root&q=${search}`)
+      .get(
+        `http://localhost:3000/recipients?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
+      )
       .then(res => updateState(res));
-  }, [ticker, search]);
+  }, [ticker, search, activePage]);
 
   function updateState(res) {
     if (res.data.message == "error") {
       alert("No data Here");
     } else {
       setData(res.data.data);
+      setRecipientsCount(res.data.count);
+      setPageCount(res.data.pages);
     }
   }
+
   //function to delete recepient.
   function deleteRecepient(id) {
     axios
@@ -86,6 +99,18 @@ function Recepient() {
               ))}
             </tbody>
           </table>
+
+          <div className="d-flex justify-content-center">
+            <Pagination
+              activePage={activePage}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={recipientsCount}
+              pageRangeDisplayed={pageCount}
+              onChange={changedPageNumber => setActivePage(changedPageNumber)}
+              linkClass="pag-item"
+              activeLinkClass="pag-item-active"
+            />
+          </div>
         </div>
       </div>
     </div>
