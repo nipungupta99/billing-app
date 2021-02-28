@@ -5,8 +5,11 @@ import FormInput from "../../components/form-input/form-input.component";
 import ExistingCustomer from "./ExistingCustomer";
 import InputField from "./inputFields.js";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function CreatePage() {
+  const history = useHistory();
+
   const [normalInfo, setNormalInfo] = useState("");
 
   // Used in input fields - passed as props from here
@@ -155,7 +158,8 @@ function CreatePage() {
         },
       })
       .then(res => console.log("Invoice Creation: ", res.data))
-      .then(() => alert("Invoice Created Successfully."));
+      .then(alert("Invoice Created Successfully."))
+      .then(() => history.push("/"));
   };
 
   // useEffect(() => {

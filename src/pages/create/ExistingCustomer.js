@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 
+import Pagination from "react-js-pagination";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -16,11 +18,23 @@ const customStyles = {
 function ExistingCustomer(props) {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
+
+  const [recipientsCount, setRecipientsCount] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
+  const [activePage, setActivePage] = useState(1);
+  const itemsPerPage = 10;
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/recipients/search?uid=root&q=${search}`)
-      .then(res => setData(res.data.data));
-  }, [search]);
+      .get(
+        `http://localhost:3000/recipients?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
+      )
+      .then(res => {
+        setData(res.data.data);
+        setRecipientsCount(res.data.count);
+        setPageCount(res.data.pages);
+      });
+  }, [search, activePage]);
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
@@ -82,6 +96,20 @@ function ExistingCustomer(props) {
             ))}
           </tbody>
         </table>
+
+        {pageCount > 1 && (
+          <div className="d-flex justify-content-center">
+            <Pagination
+              activePage={activePage}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={recipientsCount}
+              pageRangeDisplayed={pageCount}
+              onChange={changedPageNumber => setActivePage(changedPageNumber)}
+              linkClass="pag-item"
+              activeLinkClass="pag-item-active"
+            />
+          </div>
+        )}
       </Modal>
     </div>
   );

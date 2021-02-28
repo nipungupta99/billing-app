@@ -18,7 +18,7 @@ function InvoicesPage() {
   const [invoicesCount, setInvoicesCount] = useState(0);
   const [pageCount, setPageCount] = useState(1);
   const [activePage, setActivePage] = useState(1);
-  const itemsPerPage = 1;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     console.log("invoices =>", invoices);
@@ -97,17 +97,19 @@ function InvoicesPage() {
             </table>
           )}
 
-          <div className="d-flex justify-content-center">
-            <Pagination
-              activePage={activePage}
-              itemsCountPerPage={itemsPerPage}
-              totalItemsCount={invoicesCount}
-              pageRangeDisplayed={pageCount}
-              onChange={changedPageNumber => setActivePage(changedPageNumber)}
-              linkClass="pag-item"
-              activeLinkClass="pag-item-active"
-            />
-          </div>
+          {pageCount > 1 && (
+            <div className="d-flex justify-content-center">
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={itemsPerPage}
+                totalItemsCount={invoicesCount}
+                pageRangeDisplayed={pageCount}
+                onChange={changedPageNumber => setActivePage(changedPageNumber)}
+                linkClass="pag-item"
+                activeLinkClass="pag-item-active"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

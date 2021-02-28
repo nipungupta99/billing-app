@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import HeadingPair from "../../components/heading-pair/heading-pair.component";
 import FormInput from "../../components/form-input/form-input.component";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
+
 function CompanyDetails() {
+  const history = useHistory();
+
   const [data, setData] = React.useState({
     companyName: "",
     companyAddress: "",
@@ -49,7 +53,8 @@ function CompanyDetails() {
         ifscCode: data.ifscCode,
       })
       .then(res => console.log(res))
-      .then(alert("Company Details Saved Successfully."));
+      .then(alert("Company Details Saved Successfully."))
+      .then(() => history.push("/"));
   }
   return (
     <div className=" px-5 container border my-4">

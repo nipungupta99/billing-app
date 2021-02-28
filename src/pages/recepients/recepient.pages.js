@@ -100,17 +100,19 @@ function Recepient() {
             </tbody>
           </table>
 
-          <div className="d-flex justify-content-center">
-            <Pagination
-              activePage={activePage}
-              itemsCountPerPage={itemsPerPage}
-              totalItemsCount={recipientsCount}
-              pageRangeDisplayed={pageCount}
-              onChange={changedPageNumber => setActivePage(changedPageNumber)}
-              linkClass="pag-item"
-              activeLinkClass="pag-item-active"
-            />
-          </div>
+          {pageCount > 1 && (
+            <div className="d-flex justify-content-center">
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={itemsPerPage}
+                totalItemsCount={recipientsCount}
+                pageRangeDisplayed={pageCount}
+                onChange={changedPageNumber => setActivePage(changedPageNumber)}
+                linkClass="pag-item"
+                activeLinkClass="pag-item-active"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
