@@ -13,39 +13,42 @@ function InputField({ state, setState, ...props }) {
 
   function addClick() {
     setState({
-      users: [...state.users, { itemDesc: "", sacCode: "", taxableValue: 0, igst: 0 }],
+      users: [
+        ...state.users,
+        { itemDesc: "", sacCode: "", taxableValue: 0, igst: 0 },
+      ],
     });
   }
 
   function taxFields(item) {
-    // if (props.taxType === "IGST") {
-    return (
-      <div>
-        <h4 style={{ fontSize: 20 }}>
-          ₹{(item.taxableValue * 0.18).toFixed(2)}
-        </h4>
-        <p className="label"> IGST</p>
-      </div>
-    );
-    // } else {
-    // return (
-    //   <div className="d-flex flex-row">
-    //     <div>
-    //       <h4 style={{ fontSize: 20 }}>
-    //         ₹{(item.taxableValue * 0.09).toFixed(2)}
-    //       </h4>
-    //       <p className="label"> CGST</p>
-    //     </div>
-    //     &nbsp; &nbsp;
-    //     <div>
-    //       <h4 style={{ fontSize: 20 }}>
-    //         ₹{(item.taxableValue * 0.09).toFixed(2)}
-    //       </h4>
-    //       <p className="label"> SGST</p>
-    //     </div>
-    //   </div>
-    // );
-    // }
+    if (props.taxType === "IGST") {
+      return (
+        <div>
+          <h4 style={{ fontSize: 20 }}>
+            ₹{(item.taxableValue * 0.18).toFixed(2)}
+          </h4>
+          <p className="label"> IGST</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="d-flex flex-row">
+          <div>
+            <h4 style={{ fontSize: 20 }}>
+              ₹{(item.taxableValue * 0.09).toFixed(2)}
+            </h4>
+            <p className="label"> CGST</p>
+          </div>
+          &nbsp; &nbsp;
+          <div>
+            <h4 style={{ fontSize: 20 }}>
+              ₹{(item.taxableValue * 0.09).toFixed(2)}
+            </h4>
+            <p className="label"> SGST</p>
+          </div>
+        </div>
+      );
+    }
   }
 
   function createUI() {
@@ -105,7 +108,13 @@ function InputField({ state, setState, ...props }) {
 
     if (amountChange === true) {
       let users = [...state.users];
-      users[i] = { ...users[i], [name]: value, igst: value * 0.18 };
+      users[i] = {
+        ...users[i],
+        [name]: value,
+        igst: value * 0.18,
+        cgst: value * 0.09,
+        sgst: value * 0.09,
+      };
       setState({ users });
     } else {
       let users = [...state.users];

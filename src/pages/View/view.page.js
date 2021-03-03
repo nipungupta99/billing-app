@@ -107,13 +107,6 @@ function MyDocument(props) {
 
   console.log("data doc", data);
 
-  let integrated = true;
-  if (invoiceInfo.invoiceType === "IGST") {
-    integrated = true;
-  } else {
-    integrated = false;
-  }
-
   return (
     <Document>
       <Page size="A4">
@@ -192,21 +185,46 @@ function MyDocument(props) {
           <View style={{ borderWidth: 1, borderColor: "black" }}>
             <View style={styles.tHeadView}>
               <Text style={[styles.tHead, { width: "5%" }]}>S No.</Text>
-              <Text style={[styles.tHead, { width: "45%" }]}>
+              <Text
+                style={[
+                  styles.tHead,
+                  { width: invoiceInfo.invoiceType === "IGST" ? "45%" : "20%" },
+                ]}
+              >
                 Item Description
               </Text>
               <Text style={[styles.tHead, { width: "15%" }]}>SAC Code</Text>
               <Text style={[styles.tHead, { width: "10%" }]}>
                 Taxable {"\n"} Value
               </Text>
-              <Text style={[styles.tHead, { width: "10%" }]}>IGST @18%</Text>
-              <Text style={[styles.tHead, { width: "15%" }]}>Total</Text>
+              {invoiceInfo.invoiceType === "IGST" && (
+                <>
+                  <Text style={[styles.tHead, { width: "10%" }]}>
+                    IGST @18%
+                  </Text>
+                  <Text style={[styles.tHead, { width: "15%" }]}>Total</Text>
+                </>
+              )}
+              {invoiceInfo.invoiceType !== "IGST" && (
+                <>
+                  <Text style={[styles.tHead, { width: "16%" }]}>CGST @9%</Text>
+                  <Text style={[styles.tHead, { width: "16%" }]}>SGST @9%</Text>
+                  <Text style={[styles.tHead, { width: "16%" }]}>Total</Text>
+                </>
+              )}
             </View>
 
             {itemInfo.map((item, idx) => (
               <View style={styles.tDataView}>
                 <Text style={[styles.tData, { width: "5%" }]}>{idx + 1}</Text>
-                <Text style={[styles.tData, { width: "45%" }]}>
+                <Text
+                  style={[
+                    styles.tData,
+                    {
+                      width: invoiceInfo.invoiceType === "IGST" ? "45%" : "20%",
+                    },
+                  ]}
+                >
                   {item.itemDescription}
                 </Text>
                 <Text style={[styles.tData, { width: "15%" }]}>
@@ -215,12 +233,31 @@ function MyDocument(props) {
                 <Text style={[styles.tData, { width: "10%" }]}>
                   {parseFloat(item.taxableValue).toFixed(2)}
                 </Text>
-                <Text style={[styles.tData, { width: "10%" }]}>
-                  {parseFloat(item.igst).toFixed(2)}
-                </Text>
-                <Text style={[styles.tData, { width: "15%" }]}>
-                  {parseFloat(item.totalValue).toFixed(2)}
-                </Text>
+
+                {invoiceInfo.invoiceType === "IGST" && (
+                  <>
+                    <Text style={[styles.tData, { width: "10%" }]}>
+                      {parseFloat(item.igst).toFixed(2)}
+                    </Text>
+                    <Text style={[styles.tData, { width: "15%" }]}>
+                      {parseFloat(item.totalValue).toFixed(2)}
+                    </Text>
+                  </>
+                )}
+
+                {invoiceInfo.invoiceType !== "IGST" && (
+                  <>
+                    <Text style={[styles.tData, { width: "16%" }]}>
+                      {parseFloat(item.cgst).toFixed(2)}
+                    </Text>
+                    <Text style={[styles.tData, { width: "16%" }]}>
+                      {parseFloat(item.sgst).toFixed(2)}
+                    </Text>
+                    <Text style={[styles.tData, { width: "16%" }]}>
+                      {parseFloat(item.totalValue).toFixed(2)}
+                    </Text>
+                  </>
+                )}
               </View>
             ))}
           </View>
@@ -309,7 +346,11 @@ function InvoiceView(props) {
         fileName="invoice.pdf"
       >
         {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download now!"
+          loading ? (
+            "Loading document..."
+          ) : (
+            <button className="btn btn-dark">Download Invoice</button>
+          )
         }
       </PDFDownloadLink>
     </>

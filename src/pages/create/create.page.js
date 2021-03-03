@@ -17,7 +17,9 @@ function CreatePage() {
 
   // Used for item rows data -> passed as props in input fields
   const [state, setState] = useState({
-    users: [{ itemDesc: "", sacCode: "", taxableValue: 0, igst: 0 }],
+    users: [
+      { itemDesc: "", sacCode: "", taxableValue: 0, igst: 0, cgst: 0, sgst: 0 },
+    ],
   });
 
   // const [details, setDetails] = useState({
@@ -95,7 +97,7 @@ function CreatePage() {
         invoiceInfo: {
           invoiceDate: new Date(),
           invoiceNumber: generateInvNum(),
-          invoiceType: "IGST",
+          invoiceType: taxType,
         },
         generalInfo: {
           cin: normalInfo.cin,
@@ -131,7 +133,9 @@ function CreatePage() {
         itemInfo: state.users.map(item => ({
           itemDescription: item.itemDesc,
           sacCode: item.sacCode,
-          igst: item.igst,
+          igst: taxType === "IGST" ? item.igst : 0,
+          cgst: taxType === "IGST" ? 0 : item.cgst,
+          sgst: taxType === "IGST" ? 0 : item.sgst,
           taxableValue: item.taxableValue,
           totalValue: item.taxableValue * 1.18,
         })),
@@ -148,9 +152,9 @@ function CreatePage() {
         // ],
         amountInfo: {
           taxableAmount: `${total.toFixed(2)}`,
-          // totalCGST: "1231",
-          // totalSGST: "12133",
-          // totalIGST: "12312",
+          totalCGST: taxType === "IGST" ? 0 : `${(total * 0.09).toFixed(2)}`,
+          totalSGST: taxType === "IGST" ? 0 : `${(total * 0.09).toFixed(2)}`,
+          totalIGST: taxType === "IGST" ? `${(total * 0.18).toFixed(2)}` : 0,
           totalTax: `${(total * 0.18).toFixed(2)}`,
           invoiceTotal: `${(
             parseFloat(total) + parseFloat(total * 0.18)
@@ -210,7 +214,7 @@ function CreatePage() {
               </div>
             </div>
 
-            {/* <div className="d-flex flex-row justify-content-around">
+            <div className="d-flex flex-row justify-content-around">
               <button
                 className="btn btn-dark"
                 onClick={() => setTaxType("CGST+SGST")}
@@ -224,7 +228,7 @@ function CreatePage() {
               >
                 IGST
               </button>
-            </div> */}
+            </div>
 
             <div className="container-fluid py-1 ">
               <h4 className="bg-dark text-center text-white">ITEMS</h4>
