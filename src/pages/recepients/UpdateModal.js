@@ -96,7 +96,7 @@ function EditModal(props) {
             required
           />
           <FormInput
-            label="Billing Addres"
+            label="Billing Address"
             type="text"
             name="customerBillingAddress"
             //value={customerBillingAddress}
