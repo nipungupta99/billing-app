@@ -45,14 +45,46 @@ function InvoicesPage() {
     <div className="container-fluid">
       <div className="row">
         <Sidebar />
-        <div className="px-5 border col-md-10 d-md-block ">
-          <div className="py-4">
-            <FontAwesomeIcon icon={faSearch} style={{ marginRight: 5 }} />
+        <div className="px-4 col-md-10 d-md-block ">
+          {/* <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={{
+                      position: "absolute",
+                      top: "0",
+                      left: "0",
+                      width: "32px",
+                      height: "32px",
+                    }}
+                  >
+                    <img
+                      width="20"
+                      height="20"
+                      className="ml-3"
+                      src={GreyGlobe}
+                      alt="Validation Error"
+                    />
+                  </div> */}
+
+          <div className="my-3 position-relative">
             <input
+              className="py-1"
+              style={{ paddingLeft: "32px" }}
               type="text"
               placeholder="Search"
               onChange={event => setSearch(event.target.value)}
             />
+            <div
+              className="d-flex align-items-center justify-content-center"
+              style={{
+                position: "absolute",
+                top: "0",
+                left: "0",
+                width: "32px",
+                height: "32px",
+              }}
+            >
+              <FontAwesomeIcon style={{ marginTop: "4px" }} icon={faSearch} />
+            </div>
           </div>
           {!exists ? (
             <h3 className="text-center mt-3">No Invoices</h3>

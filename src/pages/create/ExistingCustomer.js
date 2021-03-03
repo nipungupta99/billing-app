@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
-
 import Pagination from "react-js-pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const customStyles = {
   content: {
@@ -62,11 +63,27 @@ function ExistingCustomer(props) {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={event => setSearch(event.target.value)}
-        />
+        <div className="py-3 position-relative">
+          <input
+            className="py-1"
+            style={{ paddingLeft: "32px" }}
+            type="text"
+            placeholder="Search"
+            onChange={event => setSearch(event.target.value)}
+          />
+          <div
+            className="d-flex align-items-center justify-content-center"
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "32px",
+              height: "32px",
+            }}
+          >
+            <FontAwesomeIcon style={{ marginTop: "34px" }} icon={faSearch} />
+          </div>
+        </div>
         <table className="table p-3 block">
           <thead className="thead-dark">
             <tr>

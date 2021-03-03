@@ -160,7 +160,7 @@ function MyDocument(props) {
               <Text style={styles.value}>{customerInfo.customerName}</Text>
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.label}>Customer Billing Address</Text>
+              <Text style={styles.label}>Customer's Billing Address</Text>
               <Text style={styles.value}>
                 {customerInfo.customerBillingAddress}
               </Text>

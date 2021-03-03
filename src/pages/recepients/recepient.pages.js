@@ -5,6 +5,8 @@ import axios from "axios";
 import AddModal from "./AddModal";
 import EditModal from "./UpdateModal";
 import Pagination from "react-js-pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 function Recepient() {
   //states definition
@@ -53,14 +55,35 @@ function Recepient() {
     <div className="container-fluid">
       <div className="row">
         <Sidebar />
-        <div className="px-5 border col-md-10 d-md-block">
-          <div className="py-4">
+        <div className="px-4 border col-md-10 d-md-block">
+          <div className="py-3">
             <div className="d-flex flex-row justify-content-between">
-              <input
-                type="text"
-                placeholder="Search"
-                onChange={event => setSearch(event.target.value)}
-              />
+              <div className="position-relative">
+                <input
+                  className="py-1"
+                  style={{ paddingLeft: "32px" }}
+                  type="text"
+                  placeholder="Search"
+                  onChange={event => setSearch(event.target.value)}
+                />
+
+                <div
+                  className="d-flex align-items-center justify-content-center"
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                    width: "32px",
+                    height: "32px",
+                  }}
+                >
+                  <FontAwesomeIcon
+                    style={{ marginTop: "4px" }}
+                    icon={faSearch}
+                  />
+                </div>
+              </div>
+
               <AddModal update={updateData} />
             </div>
           </div>
