@@ -5,13 +5,16 @@ import * as serviceWorker from "./serviceWorker";
 import "./index.scss";
 import { DataProvider } from "./context/dataContext";
 import { DetailsProvider } from "./context/detailsContext.js";
+import {LoginProvider} from "./context/loginContext";
 ReactDOM.render(
   <React.StrictMode>
-    <DataProvider>
-      <DetailsProvider>
-        <App />
-      </DetailsProvider>
-    </DataProvider>
+      <LoginProvider>
+          <DataProvider>
+              <DetailsProvider>
+                  <App />
+              </DetailsProvider>
+          </DataProvider>
+      </LoginProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

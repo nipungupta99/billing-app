@@ -93,7 +93,7 @@ function InputField({ state, setState, ...props }) {
           type="button"
           className="btn btn-default"
           value="remove"
-          onClick={e => removeClick(item, e)}
+          onClick={e => removeClick(idx, e)}
         >
           <FontAwesomeIcon icon={faTrash} />
         </div>
