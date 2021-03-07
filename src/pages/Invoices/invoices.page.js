@@ -27,7 +27,7 @@ function InvoicesPage() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3000/invoices/search?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
+        `http://143.110.242.45:3000/invoices/search?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
       )
       .then(res => {
         if (res.data.data === "No invoices.") {

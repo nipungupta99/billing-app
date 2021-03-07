@@ -24,7 +24,7 @@ function CompanyDetails() {
   });
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/users/root?name=admin&password=password`)
+      .get(`http://143.110.242.45:3000/users/root?name=admin&password=password`)
       .then(res => setData(res.data.data.details));
   }, []);
   function handleChange(evt) {
@@ -37,7 +37,7 @@ function CompanyDetails() {
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .put(`http://localhost:3000/users/root`, {
+      .put(`http://143.110.242.45:3000/users/root`, {
         companyName: data.companyName,
         companyAddress: data.companyAddress,
         companyEmail: data.companyEmail,

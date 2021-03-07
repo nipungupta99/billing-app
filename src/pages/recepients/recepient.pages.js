@@ -24,7 +24,7 @@ function Recepient() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3000/recipients?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
+        `http://143.110.242.45:3000/recipients?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
       )
       .then(res => updateState(res));
   }, [ticker, search, activePage]);
@@ -42,7 +42,9 @@ function Recepient() {
   //function to delete recepient.
   function deleteRecepient(id) {
     axios
-      .delete(`http://localhost:3000/recipients?uid=root&recipientID=${id}`)
+      .delete(
+        `http://143.110.242.45:3000/recipients?uid=root&recipientID=${id}`
+      )
       .then(res => setTicker(!ticker))
       .catch(err => alert("error in connection , please try again"));
   }

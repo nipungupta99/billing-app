@@ -28,7 +28,7 @@ function ExistingCustomer(props) {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3000/recipients?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
+        `http://143.110.242.45:3000/recipients?uid=root&page=${activePage}&limit=${itemsPerPage}&q=${search}`
       )
       .then(res => {
         setData(res.data.data);

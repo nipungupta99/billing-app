@@ -83,7 +83,7 @@ function MyDocument(props) {
   // Getting company and general info data
   const fetchData = async () => {
     const { data } = await axios.get(
-      `http://localhost:3000/users/root?name=admin&password=password`
+      `http://143.110.242.45:3000/users/root?name=admin&password=password`
     );
 
     console.log("latest info", data.data.details);

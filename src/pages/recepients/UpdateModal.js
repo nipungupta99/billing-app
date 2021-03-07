@@ -49,7 +49,7 @@ function EditModal(props) {
 
     await axios({
       method: "put",
-      url: `http://localhost:3000/recipients?uid=root&recipientID=${props.data._id}`,
+      url: `http://143.110.242.45:3000/recipients?uid=root&recipientID=${props.data._id}`,
       headers: {},
       data: {
         customerName: `${state.customerName}`,
