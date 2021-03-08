@@ -105,7 +105,6 @@ function MyDocument(props) {
     itemInfo,
   } = data;
 
-  console.log("data doc", data);
 
   return (
     <Document>
@@ -336,24 +335,27 @@ function MyDocument(props) {
 
 function InvoiceView(props) {
   return (
-    <>
+    <div>
+     <div className="p-3" >
+       <PDFDownloadLink
+           style={styles.downloadButton}
+           document={MyDocument()}
+           fileName="invoice.pdf"
+       >
+         {({ blob, url, loading, error }) =>
+             loading ? (
+                 "Loading document..."
+             ) : (
+                 <button className="btn btn-dark">Download Invoice</button>
+             )
+         }
+       </PDFDownloadLink>
+     </div>
       <PDFViewer width="80%" height={1170}>
         <DataProvider>{MyDocument()}</DataProvider>
       </PDFViewer>
-      <PDFDownloadLink
-        style={styles.downloadButton}
-        document={MyDocument()}
-        fileName="invoice.pdf"
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? (
-            "Loading document..."
-          ) : (
-            <button className="btn btn-dark">Download Invoice</button>
-          )
-        }
-      </PDFDownloadLink>
-    </>
+
+    </div>
   );
 }
 
