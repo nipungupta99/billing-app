@@ -1,8 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./sidebar.scss";
+import firebase from "../../firebase";
 
 function Sidebar() {
+
+  const handleSignOut = () => {
+        firebase.auth()
+        .signOut()
+        .then(function () {
+          localStorage.clear();
+        })
+        .then(() =>
+            setTimeout(() => {
+              window.location.assign("http://143.110.242.45");
+            }, 250)
+        )
+        .catch(function (error) {
+          alert(error);
+        });
+  };
+
   return (
     <nav
       id="sidebarMenu"
@@ -37,6 +55,9 @@ function Sidebar() {
         >
           Create Invoice
         </Link>
+        <button onClick={handleSignOut} className="btn btn-light align-self-center signout-button">
+          Sign Out
+        </button>
       </div>
     </nav>
   );
